@@ -1,0 +1,16 @@
+- [x] Başlangıç Araştırması ve Planlama
+    - [x] UI-UX Pro Max skill dökümanını incele
+    - [x] Mevcut UI yapısını analiz et
+    - [x] Modernizasyon için tasarım paleti ve stil seçimi yap
+- [x] Uygulama ve Modernizasyon
+    - [x] `index.css` temel tasarım sistemini güncelle
+    - [x] Bileşenleri (Components) modern stillerle yenile
+    - [x] Micro-animasyonlar ve etkileşimli öğeler ekle
+- [x] Doğrulama ve İyileştirme
+    - [x] UI bütünlüğünü kontrol et
+    - [x] Yapılan değişiklikleri dökümante et
+- [x] Phase 2: Backend ve Veri Entegrasyonu
+    - [x] Docker ve PocketBase servislerinin kontrolü
+    - [x] Veri tohumlama (Seed) işlemlerinin gerçekleştirilmesi
+    - [x] Ajan simülasyon mantığının (Ghost in the Shell) kurulması
+    - [ ] GIS (Harita) veri katmanı entegrasyonu (Gelecek Faz)

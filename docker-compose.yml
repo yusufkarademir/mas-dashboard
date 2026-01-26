@@ -1,0 +1,16 @@
+version: "3.7"
+services:
+  pocketbase:
+    build: .
+    container_name: mas-pocketbase
+    restart: unless-stopped
+    image: mas-kontrol-pocketbase
+    ports:
+      - "8095:8090"
+    volumes:
+      - ./pb_data:/pb/pb_data
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:8090/api/health || exit 1
+      interval: 5s
+      timeout: 5s
+      retries: 5
