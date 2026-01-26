@@ -40,7 +40,7 @@ export const useStore = create<MASState>((set) => ({
     processed_acres: 450
   },
   isMemoryMode: false,
-  pb: new PocketBase('http://127.0.0.1:8095'), // Local PocketBase URL
+  pb: new PocketBase(import.meta.env.VITE_PB_URL || 'http://127.0.0.1:8095'), // Dynamic URL for production
 
   addInteraction: (interaction) => set((state) => ({ 
     interactions: [interaction, ...state.interactions].slice(0, 50) 
