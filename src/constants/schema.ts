@@ -3,6 +3,7 @@ export const COLLECTIONS = {
   GEMS: "gems",
   FIELDS: "fields",
   MEMORY_LOGS: "memory_logs",
+  TASKS: "tasks",
 } as const;
 
 export const ROLES = {

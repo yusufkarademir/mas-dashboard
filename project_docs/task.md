@@ -1,16 +1,26 @@
 - [x] Başlangıç Araştırması ve Planlama
-    - [x] UI-UX Pro Max skill dökümanını incele
-    - [x] Mevcut UI yapısını analiz et
-    - [x] Modernizasyon için tasarım paleti ve stil seçimi yap
-- [x] Uygulama ve Modernizasyon
-    - [x] `index.css` temel tasarım sistemini güncelle
-    - [x] Bileşenleri (Components) modern stillerle yenile
-    - [x] Micro-animasyonlar ve etkileşimli öğeler ekle
-- [x] Doğrulama ve İyileştirme
-    - [x] UI bütünlüğünü kontrol et
-    - [x] Yapılan değişiklikleri dökümante et
-- [x] Phase 2: Backend ve Veri Entegrasyonu
-    - [x] Docker ve PocketBase servislerinin kontrolü
-    - [x] Veri tohumlama (Seed) işlemlerinin gerçekleştirilmesi
-    - [x] Ajan simülasyon mantığının (Ghost in the Shell) kurulması
-    - [ ] GIS (Harita) veri katmanı entegrasyonu (Gelecek Faz)
+- [x] Phase 1 & 2: Temel UI ve Simülasyon Geliştirme
+- [x] Phase 2: Backend ve Canlı Deployment
+- [/] Phase 3: Coğrafi Veri Boru Hattı ve Stratejik Analiz Motoru
+    - [x] Veri Tabanı ve Şema (PocketBase & PostGIS)
+        - [x] `analysis_results` koleksiyonu hazırlığı
+        - [x] `strategy_reports` koleksiyonu hazırlığı
+        - [x] PostGIS `detections` tablosu hazırlığı
+    - [/] Görüntü İşleme Motoru (GDAL/ODM)
+        - [x] Radyometrik Kalibrasyon ve SAVI/NDRE formülleri
+        - [x] Dinamik SAVI ($L$ katsayısı) mantığı
+        - [x] Maskeleme (NDVI < 0.2 ve NIR < 0.12 filtreleri)
+    - [x] AI Çıkarım Hattı (TensorRT & Tiling)
+        - [x] 640x640 %20 overlap tiling mekanizması
+        - [x] ONNX Runtime / TensorRT .engine çıkarım motoru (Mock/Architecture)
+        - [x] Stitching ve Global NMS (Non-Maximum Suppression)
+    - [x] Stratejik Karar ve AI Reçeteleme
+        - [x] Kritik eşik alarm mekanizması (%15 NDVI düşüşü)
+        - [x] LLM (Ollama/GPT-4) ile Markdown müdahale planı üretimi
+    - [x] Frontend: "Agro-Intelligence" UI
+        - [x] `index.css` Modernizasyonu (HSL, Glassmorphism)
+        - [x] Mapbox & COG Entegrasyonu (`GisOverlay.tsx`)
+        - [x] Action Center & Glitch Uyarılar (`ActionCenter.tsx`)
+        - [x] Dinamik Dashboard Cilası (Micro-animations)
+- [x] Phase 3: Tamamlandı ve Doğrulandı
+- [/] Phase 4: Stabilizasyon ve Final Testler

@@ -23,10 +23,10 @@ export function ActivityFeed() {
   useEffect(() => {
     if (interactions.length === 0) {
       addInteraction({
-        id: '1', role: ROLES.STRATEGY_LEADER, sender: 'Koordinatör', message: 'Sistem başlatıldı. Tüm Gems göreve hazır.', created: new Date().toISOString()
+        id: 'feed-1', role: ROLES.STRATEGY_LEADER, sender: 'Koordinatör', message: 'Sistem başlatıldı. Tüm Gems göreve hazır.', created: new Date().toISOString()
       });
       addInteraction({
-        id: '2', role: ROLES.AGRONOMIST, sender: 'Agronomist', message: 'X Tarlası NDVI verileri analiz ediliyor...', created: new Date().toISOString(), is_thinking: true
+        id: 'feed-2', role: ROLES.AGRONOMIST, sender: 'Agronomist', message: 'X Tarlası NDVI verileri analiz ediliyor...', created: new Date().toISOString(), is_thinking: true
       });
     }
   }, []);

@@ -1,0 +1,48 @@
+version: "3.7"
+
+services:
+  postgis:
+    image: postgis/postgis:15-3.3
+    container_name: mas-postgis
+    environment:
+      POSTGRES_DB: mas_gis
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgis_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: mas-redis
+    ports:
+      - "6379:6379"
+
+  martin:
+    image: maplibre/martin
+    container_name: mas-martin
+    environment:
+      DATABASE_URL: postgres://admin:password123@postgis/mas_gis
+    ports:
+      - "3001:3000"
+    depends_on:
+      - postgis
+
+  worker:
+    build:
+      context: ./services/worker
+    container_name: mas-worker
+    environment:
+      POCKETBASE_URL: http://pocketbase:8090
+      REDIS_URL: redis://redis:6379/0
+      ODM_NODE_URL: http://odm-node:3000
+    volumes:
+      - ./services/worker:/app
+      - ./data/storage:/data/storage
+    depends_on:
+      - redis
+      - postgis
+
+volumes:
+  postgis_data:

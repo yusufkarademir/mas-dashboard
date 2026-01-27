@@ -1,43 +1,30 @@
-# MAS-Kontrol UI Modernizasyon Planı
+# Faz 3: "Agro-Intelligence" UI Geliştirme Planı
 
-Bu plan, uygulamanın mevcut siberpunk/karanlık mod temasını `ui-ux-pro-max` standartlarına göre daha profesyonel, akıcı ve görsel olarak etkileyici bir seviyeye taşımayı hedefler.
+Bu aşamada backend'den gelen coğrafi veriler ve analiz sonuçları, kullanıcının "wow" diyeceği siberpunk bir Dashboard üzerinde görselleştirilecektir.
 
-## Önerilen Değişiklikler
+## Proposed Changes
 
-### 1. Tasarım Sistemi ve Temeller (Component: Design System)
-- **Renk Paleti:** OLED dostu derin siyahlar, gece mavisi ve canlı neon yeşili/camgöbeği vurgular.
-- **Tipografi:** Teknik ve hassas bir görünüm için `Fira Code` ve `Fira Sans` fontlarının entegrasyonu.
-- **Efektler:** Glassmorphism (arka plan bulanıklığı), yumuşak parlamalar (glow) ve katmanlı gölgeler.
+### 🎨 Global Stil ve Tema (`index.css`) [MODIFY]
+- **HSL Renk Paleti:** Daha doygun ve modern tarım teknolojisi renkleri (#39FF14: Toxic Green, #00F5FF: Pulse Cyan).
+- **Glassmorphism:** Tüm paneller için `backdrop-filter: blur(20px)` ve ince `white/5` border kullanımı.
+- **Glitch Animasyonlar:** Kritik uyarılarda kullanılacak CSS keyframe animasyonları.
 
-#### [MODIFY] [index.css](file:///d:/Code/MAS-Kontrol/src/index.css)
-- Tailwind temasına yeni renk değişkenleri eklenecek.
-- Global `base` stilleri güncellenecek.
-- Arka plan için siberpunk dokulu gradyanlar tanımlanacak.
+### 🗺️ Harita Katmanı (`GisOverlay.tsx` & `MapSection.tsx`) [NEW/MODIFY]
+- **Mapbox Entegrasyonu:** `MapPlaceholder` yerine gerçek `react-map-gl` kurulumu.
+- **NDVI Raster Katmanı:** COG üzerinden `raster-tiles` ve dinamik `raster-color-ramp` ile ısı haritası görselleştirmesi.
+- **Detection Vektör Katmanı:** PostGIS'ten gelen bitki noktalarını gösteren dinamik GeoJSON katmanı.
 
-### 2. Arayüz Düzeni ve Animasyonlar (Component: Layout)
-#### [MODIFY] [App.tsx](file:///d:/Code/MAS-Kontrol/src/App.tsx)
-- Header ve Sidebar için modern "floating" (yüzen) ve şeffaf görünüm.
-- Ana içerik alanı için `framer-motion` ile giriş animasyonları.
+### ⚠️ Action Center (`ActionCenter.tsx`) [NEW]
+- **Kritik Uyanlar:** Backend'den gelen `%15 stres` veya `Critical` şiddet seviyesine sahip raporların glitch efektli sunumu.
+- **AI Reçete Gösterimi:** Markdown formatındaki müdahale planlarının okunabilir, şık bir panelde sunulması.
 
-### 3. Bileşen Modernizasyonu (Component: UI Components)
-#### [MODIFY] [Sidebar.tsx](file:///d:/Code/MAS-Kontrol/src/components/Sidebar.tsx)
-- Menü öğeleri için etkileşimli hover efektleri.
-- Aktif öğeler için neon vurgu çizgileri.
+### 📊 Dashboard Cila (`App.tsx` & `StatCards.tsx`) [MODIFY]
+- **Micro-Animations:** `framer-motion` ile veri değişimlerinde akıcı geçişler.
+- **Siberpunk Detaylar:** Scan-line efektleri, border-glow animasyonları ve gelişmiş tipografi.
 
-#### [MODIFY] [StatCards.tsx](file:///d:/Code/MAS-Kontrol/src/components/StatCards.tsx)
-- Kart tasarımları için "Bento Grid" tarzı yapı.
-- Sayısal veriler için parlatma efektleri.
+## Verification Plan
 
-#### [MODIFY] [ActivityFeed.tsx](file:///d:/Code/MAS-Kontrol/src/components/ActivityFeed.tsx)
-- Liste öğeleri için staggered (kademeli) yüklenme animasyonu.
-- Durum göstergeleri için animasyonlu ping efektleri.
-
-## Doğrulama Planı
-
-### Otomatik Testler
-- Build sürecinin hatasız tamamlandığının kontrolü: `npm run build`
-
-### Manuel Doğrulama
-1. **Görsel Kontrol:** Tarayıcı üzerinden yeni tasarımın renk kontrastı ve tipografi uyumunun incelenmesi.
-2. **Animasyon Testi:** Sayfa geçişleri ve hover efektlerinin akıcılığının (duration/timing) test edilmesi.
-3. **Responsive Kontrol:** Farklı ekran boyutlarında (Mobil, Tablet, Desktop) yerleşimin bozulmadığının doğrulanması.
+### Manual Verification
+1.  **Harita Görselleştirme:** NDVI katmanının harita üzerinde doğru oturup oturmadığının kontrolü.
+2.  **Glitch Testi:** `ActionCenter` bileşeninde `Critical` statüsü elle tetiklenerek animasyonun doğrulanması.
+3.  **Mobil Uyumluluk:** Dashboard'un farklı ekran boyutlarında siberpunk estetiğini koruduğunun kontrolü.

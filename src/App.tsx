@@ -1,11 +1,12 @@
 import { Sidebar } from './components/Sidebar';
 import { ActivityFeed } from './components/ActivityFeed';
+import { ActionCenter } from './components/AI/ActionCenter';
 import { StatCards } from './components/StatCards';
 import { MemorySearch } from './components/MemorySearch';
-import { MapPlaceholder } from './components/MapPlaceholder';
+import { MapSection } from './components/Map/MapSection';
 import { usePocketBase } from './hooks/usePocketBase';
 import { useSimulation } from './hooks/useSimulation';
-import { Bell, User, LayoutGrid, Settings2 } from 'lucide-react';
+import { Bell, User, LayoutGrid, Settings2, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 function App() {
@@ -77,16 +78,30 @@ function App() {
             <StatCards />
 
             {/* Main Content Grid */}
-            <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-8 min-h-0">
+            <div className="flex-1 grid grid-cols-1 lg:grid-cols-4 gap-8 min-h-0">
               
-              {/* Left Column: Activity Feed (2 units) */}
-              <div className="lg:col-span-2 h-full min-h-[500px]">
-                <ActivityFeed />
+              {/* Left Column: AI Action Center (1 unit) */}
+              <div className="lg:col-span-1 h-full min-h-[500px]">
+                <ActionCenter />
               </div>
 
-              {/* Right Column: Map & Details (1 unit) */}
-              <div className="h-full min-h-[400px]">
-                <MapPlaceholder />
+              {/* Middle Column: GIS Map (2 units) */}
+              <div className="lg:col-span-2 h-full min-h-[500px] relative">
+                <MapSection />
+                {/* Tactical Overlay Info */}
+                <div className="absolute top-8 left-8 z-30 pointer-events-none">
+                  <div className="flex items-center gap-3">
+                    <ShieldCheck className="w-5 h-5 text-agri-cyan animate-pulse" />
+                    <span className="text-[10px] font-black text-agri-cyan uppercase tracking-[0.4em] drop-shadow-[0_0_8px_rgba(0,245,255,0.5)]">
+                      Secure Agro-Link Active
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column: Activity Feed (1 unit) */}
+              <div className="lg:col-span-1 h-full min-h-[400px]">
+                <ActivityFeed />
               </div>
 
             </div>

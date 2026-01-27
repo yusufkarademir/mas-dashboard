@@ -1,6 +1,6 @@
 import PocketBase from 'pocketbase';
 
-const pb = new PocketBase('http://127.0.0.1:8095');
+const pb = new PocketBase('https://pb.yusuff.dev');
 
 // BU SCRIPT'i ÇALIŞTIRMADAN ÖNCE:
 // 1. Tarayıcıdan http://127.0.0.1:8090/_/ adresine git.
@@ -26,9 +26,27 @@ const DATA = {
 
 async function main() {
   try {
-    // Admin login
-    await pb.admins.authWithPassword('admin@mas.com', '1234567890');
-    console.log('✅ Admin girişi başarılı.');
+    // Admin login (v0.22+ superuser ve eski admin desteği)
+    console.log('Attempting authentication...');
+    try {
+        // v0.22+ superuser endpoint denemesi
+        const authData = await pb.send('/api/collections/_superusers/auth-with-password', {
+            method: 'POST',
+            body: { identity: 'yusufkarademir@gmail.com', password: '210517.Of' }
+        });
+        pb.authStore.save(authData.token, authData.record);
+        console.log('✅ v0.22+ Superuser girişi başarılı.');
+    } catch (e) {
+        console.log('Superuser endpoint failed:', e.message, e.data);
+        console.log('Falling back to legacy admin auth...');
+        try {
+            await pb.admins.authWithPassword('yusufkarademir@gmail.com', '210517.Of');
+            console.log('✅ Legacy Admin girişi başarılı.');
+        } catch (e2) {
+            console.error('❌ Tüm giriş denemeleri başarısız oldu.');
+            throw e2;
+        }
+    }
 
     // 1. Create Collections
     try {

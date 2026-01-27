@@ -12,17 +12,24 @@
   
   --font-sans: 'Fira Sans', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* HSL Modern Palet */
+  --color-agri-green: hsl(120, 100%, 54%);
+  --color-agri-cyan: hsl(182, 100%, 50%);
+  --color-agri-red: hsl(0, 84%, 60%);
+  --color-agri-violet: hsl(272, 51%, 47%);
 }
 
 @layer base {
   body {
     @apply bg-mas-black text-mas-text font-sans antialiased selection:bg-mas-light/30;
+    background-image: radial-gradient(circle at 50% -20%, #1e293b 0%, #050505 80%);
   }
   
   /* Custom Scrollbar */
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 4px;
+    height: 4px;
   }
   
   ::-webkit-scrollbar-track {
@@ -30,28 +37,54 @@
   }
   
   ::-webkit-scrollbar-thumb {
-    @apply bg-mas-gray/50 rounded-full hover:bg-mas-gray;
+    @apply bg-mas-gray/50 rounded-full hover:bg-mas-light/50 transition-colors;
   }
 }
 
 @layer components {
   .glass-panel {
-    @apply bg-mas-dark/40 border border-white/5 backdrop-blur-xl shadow-2xl;
+    @apply bg-mas-black/40 border border-white/5 backdrop-blur-2xl shadow-2xl relative overflow-hidden;
   }
   
-  .neon-border-green {
-    @apply border-mas-light/20 shadow-[0_0_15px_rgba(57,255,20,0.1)];
-  }
-  
-  .neon-border-cyan {
-    @apply border-mas-cyan/20 shadow-[0_0_15px_rgba(0,245,255,0.1)];
+  .glass-panel::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none;
   }
 
-  .text-glow-green {
-    text-shadow: 0 0 10px rgba(57,255,20,0.5);
+  .neon-border-agri {
+    @apply border-agri-green/20 shadow-[0_0_20px_rgba(57,255,20,0.1)];
   }
 
-  .text-glow-cyan {
-    text-shadow: 0 0 10px rgba(0,245,255,0.5);
+  /* Glitch Effect */
+  @keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+  }
+
+  .animate-glitch {
+    animation: glitch 0.3s cubic-bezier(.25,.46,.45,.94) both infinite;
+    text-shadow: 2px 0 #00f5ff, -2px 0 #ff00c1;
+  }
+
+  /* Scanline Effect */
+  .scanline {
+    width: 100%;
+    height: 100px;
+    z-index: 10;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(57, 255, 20, 0.05) 50%, rgba(0, 0, 0, 0) 100%);
+    opacity: 0.1;
+    position: absolute;
+    bottom: 100%;
+    animation: scanline 6s linear infinite;
+  }
+
+  @keyframes scanline {
+    0% { bottom: 100%; }
+    80% { bottom: 0; }
+    100% { bottom: 0; }
   }
 }
