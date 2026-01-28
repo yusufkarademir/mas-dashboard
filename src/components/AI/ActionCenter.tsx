@@ -3,10 +3,11 @@ import { AlertTriangle, Zap, CheckCircle2, Terminal } from 'lucide-react';
 
 interface ActionItem {
   id: string;
-  type: 'critical' | 'warning' | 'info';
+  type: 'critical' | 'warning' | 'info' | 'prescription';
   title: string;
   description: string;
   timestamp: string;
+  bbch?: string;
 }
 
 const mockActions: ActionItem[] = [
@@ -14,15 +15,17 @@ const mockActions: ActionItem[] = [
     id: 'action-1',
     type: 'critical',
     title: 'KRİTİK STRES TESPİTİ',
-    description: 'Tarla 42 bölgesinde NDVI değerlerinde %18 ani düşüş. Sulama arızası şüpheli.',
-    timestamp: '2dk önce'
+    description: 'X-42 bölgesinde NDVI < 0.50. Sulama veya kök çürüklüğü riski.',
+    timestamp: '2dk önce',
+    bbch: 'BBCH 14'
   },
   {
-    id: 'action-2',
-    type: 'warning',
-    title: 'BOŞLUK YOĞUNLUĞU',
-    description: 'Güney segmentte bitki çıkışı beklenen eşiğin altında (%12 açık).',
-    timestamp: '15dk önce'
+    id: 'action-3',
+    type: 'prescription',
+    title: 'REÇETE OLUŞTURULDU',
+    description: 'Rhizoctonia tespiti için lokal fungisit uygulaması (GeoJSON hazır).',
+    timestamp: 'Yeni',
+    bbch: 'BBCH 16'
   }
 ];
 
@@ -53,6 +56,8 @@ export function ActionCenter() {
               className={`group relative p-4 rounded-2xl border transition-all cursor-pointer overflow-hidden ${
                 action.type === 'critical' 
                   ? 'bg-agri-red/5 border-agri-red/20 hover:border-agri-red/40' 
+                  : action.type === 'prescription'
+                  ? 'bg-agri-cyan/5 border-agri-cyan/20 hover:border-agri-cyan/40'
                   : 'bg-agri-violet/5 border-agri-violet/20 hover:border-agri-violet/40'
               }`}
             >
@@ -63,10 +68,14 @@ export function ActionCenter() {
 
               <div className="flex items-start gap-4">
                 <div className={`p-2.5 rounded-xl border ${
-                  action.type === 'critical' ? 'bg-agri-red/10 border-agri-red/20' : 'bg-agri-violet/10 border-agri-violet/20'
+                  action.type === 'critical' ? 'bg-agri-red/10 border-agri-red/20' : 
+                  action.type === 'prescription' ? 'bg-agri-cyan/10 border-agri-cyan/20' : 
+                  'bg-agri-violet/10 border-agri-violet/20'
                 }`}>
                   {action.type === 'critical' ? (
                     <AlertTriangle className="w-4 h-4 text-agri-red" />
+                  ) : action.type === 'prescription' ? (
+                    <CheckCircle2 className="w-4 h-4 text-agri-cyan" />
                   ) : (
                     <Zap className="w-4 h-4 text-agri-violet" />
                   )}
@@ -74,11 +83,20 @@ export function ActionCenter() {
 
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-1">
-                    <span className={`text-[10px] font-black uppercase tracking-widest ${
-                      action.type === 'critical' ? 'text-agri-red animate-pulse' : 'text-agri-violet'
-                    }`}>
-                      {action.title}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className={`text-[10px] font-black uppercase tracking-widest ${
+                        action.type === 'critical' ? 'text-agri-red animate-pulse' : 
+                        action.type === 'prescription' ? 'text-agri-cyan' :
+                        'text-agri-violet'
+                      }`}>
+                        {action.title}
+                      </span>
+                      {action.bbch && (
+                        <span className="text-[7px] font-bold bg-white/5 border border-white/10 px-1.5 py-0.5 rounded-md text-mas-muted">
+                          {action.bbch}
+                        </span>
+                      )}
+                    </div>
                     <span className="text-[8px] font-bold text-mas-muted uppercase">{action.timestamp}</span>
                   </div>
                   <p className="text-[11px] text-mas-muted leading-relaxed font-medium">

@@ -42,7 +42,7 @@ const SCENARIOS = [
 ];
 
 export function useSimulation() {
-  const { pb, updateMetrics } = useStore();
+  const { pb, updateMetrics, updateSystemMetrics } = useStore();
 
   const simulateStep = useCallback(async () => {
     // 1. Randomly pick a scenario
@@ -69,6 +69,13 @@ export function useSimulation() {
 
           // 4. Update Metrics occasionally
           updateMetrics({
+            growth_score: Math.floor(Math.random() * 20) + 60,
+            ndvi_avg: 0.4 + Math.random() * 0.4,
+            stress_index: Math.random() * 0.3
+          });
+
+          // Update System Metrics
+          updateSystemMetrics({
             cpu_usage: Math.floor(Math.random() * 40) + 20,
             processed_acres: Math.floor(Math.random() * 50) + 500
           });

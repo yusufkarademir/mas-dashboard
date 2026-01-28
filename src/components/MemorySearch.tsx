@@ -3,7 +3,7 @@ import { useStore } from '../store/useStore';
 import { cn } from '../lib/utils';
 
 export function MemorySearch() {
-  const { isMemoryMode, toggleMemoryMode } = useStore();
+  const { isMemoryMode, toggleMemoryMode, metrics } = useStore();
 
   return (
     <div className="relative flex-1 max-w-2xl group mx-4">
@@ -12,7 +12,7 @@ export function MemorySearch() {
       </div>
       <input 
         type="text" 
-        placeholder="Sistem hafızasında ara..."
+        placeholder={isMemoryMode ? `BBCH Verisiyle Ara: ${metrics.bbch_stage}` : "Sistem hafızasında ara..."}
         className={cn(
           "w-full bg-white/[0.03] border border-white/5 text-sm text-mas-text rounded-2xl pl-11 pr-24 py-3 transition-all duration-500",
           "focus:outline-none focus:bg-white/[0.05] focus:border-white/10 focus:shadow-[0_0_20px_rgba(255,255,255,0.03)]",
@@ -20,6 +20,15 @@ export function MemorySearch() {
           isMemoryMode && "border-mas-cyan/20 ring-1 ring-mas-cyan/10"
         )}
       />
+      
+      {isMemoryMode && (
+        <div className="absolute -bottom-6 left-4 flex items-center gap-2">
+           <div className="w-1.5 h-1.5 rounded-full bg-mas-cyan animate-pulse" />
+           <span className="text-[8px] font-black text-mas-cyan uppercase tracking-widest">
+             Sorgu Bağlamı: {metrics.bbch_stage}
+           </span>
+        </div>
+      )}
       
       <button 
         onClick={toggleMemoryMode}
