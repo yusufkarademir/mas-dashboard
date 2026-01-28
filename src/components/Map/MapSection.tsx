@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Map, { NavigationControl, FullscreenControl, ScaleControl, GeolocateControl } from 'react-map-gl/mapbox';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { GisOverlay } from './GisOverlay';
-import { Layers, Maximize, Map as MapIcon } from 'lucide-react';
+import { Layers } from 'lucide-react';
 
 const MAPBOX_TOKEN = 'pk.eyJ1IjoibXVoZW5kaXNiZXkiLCJhIjoiY20wbWVwZzNqMDFmNTJzczlhazdjc2h5aCJ9.o18TVAgRSTbk0xcnXio1kA'; // Mock Token, kullanıcı kendi tokenini eklemeli
 
