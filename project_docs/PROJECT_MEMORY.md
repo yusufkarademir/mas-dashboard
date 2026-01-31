@@ -1,32 +1,30 @@
 # Şeker Pancarı MAS Dashboard - Proje Hafızası
 
-Son Güncelleme: 28 Ocak 2026
-Durum: 🏗️ Phase 3 Uygulanıyor - Ağır Sanayi GIS & AI Pipeline
+Son Güncelleme: 29 Ocak 2026
+Durum: ✅ Phase 3 Ar-Ge Entegrasyonu Tamamlandı - Stabil Build
 
 ## 🎯 Proje Özeti
-Şeker Pancarı verimini artırmak amacıyla geliştirilen, drone ve yapay zeka destekli Multi-Agent System (MAS) için Tarım-İstihbarat Platformu'dur. 5 farklı uzman ajanın saha verilerini (SAVI, NDRE, Ortofoto) işleyip stratejik reçeteler üretmesini sağlar.
+Şeker Pancarı verimini artırmak amacıyla geliştirilen, drone ve yapay zeka destekli Multi-Agent System (MAS) için Tarım-İstihbarat Platformu'dur. Sistem; BBCH evre takibi, NDVI/NDRE analizi, stres tespiti ve GIS katmanları ile tam entegre çalışmaktadır.
 
-## 🏗️ Mimari Yapı (Faz 3 Güncel)
-- **Frontend:** React + Vite, Mapbox GL JS (GisOverlay), Framer Motion (Action Center Glitch)
-- **Backend:** PocketBase (v0.22+) + PostGIS (Spatial Veri)
-- **Worker:** Python 3.11 Engine (PyODM, Rasterio, GDAL, Torch)
-- **Kuyruk:** Redis / BullMQ (Asenkron Görevler)
+## 🏗️ Mimari Yapı (Güncel)
+- **Frontend:** React 19 + Vite 7, Mapbox GL JS (Multi-layer GIS), Zustand 5 (Agri-Metrics State)
+- **Backend:** PocketBase (v0.22+) - `field_analytics` ve `interactions` koleksiyonları.
+- **AI/RAG:** `MemorySearch` bileşeni üzerinden fenolojik evre (BBCH) bağlamlı semantik sorgulama.
 
 ## 🧩 Modüller ve Durumları
 | Modül | Durum | Açıklama |
 | :--- | :--- | :--- |
-| **Agro-Engine** | 🏗️ İnşa | SAVI, NDRE, %15 Stres Kontrolü (processor.py hazır). |
-| **GIS Pipeline** | 🏗️ İnşa | COG (Lazy Loading) ve Martin (Vector Tile) altyapısı. |
-| **AI Vision** | 🏗️ İnşa | 640x640 Tiling ve TensorRT entegrasyonu planlandı. |
+| **Agro-Metrics** | ✅ Tamam | BBCH, NDVI, Stres, Bitki Sayımı ve Verim Projeksiyonu entegre edildi. |
+| **GIS Katmanları** | ✅ Tamam | COG Raster, Isı Haritası (Hastalık) ve Segmentasyon desteği eklendi. |
+| **Karar Destek** | ✅ Tamam | `ActionCenter` reçete (prescription) ve müdahale talimatları aktif. |
 
 ## 🔑 Restart Sonrası Adımlar (Elimizin Altında)
 Sistem açıldığında sırasıyla çalıştırılacak komutlar:
-1. **Docker Servisleri:** `docker-compose -f docker-compose.gis.yml up -d --build`
-2. **Şema Güncelleme:** `python scripts/setup_pb_blueprint.py` (PocketBase Analysis & Strategy tabloları)
-3. **Frontend Bağımlılıklar:** `npm install` (mapbox-gl ve react-map-gl yüklendi)
+1. **Yerel PocketBase:** `pocketbase serve --http=0.0.0.0:8095` (D: sürücüsünde pb_data mevcut)
+2. **Frontend Dev:** `npm run dev`
+3. **Build Kontrol:** `npm run build` (TypeScript hataları giderildi)
 
 ## 📝 Teknik Notlar (Blueprint)
-- **SAVI:** Dinamik $L$ katsayılı ($0.5/0.25$).
-- **NDRE:** Azot/Klorofil takibi için aktif.
-- **Tiling:** 640x640 %20 overlap.
-- **Critical Threshold:** %15 lokal stres -> `action_required: true`.
+- **Deployment:** Coolify exit code 255 hatası sunucu kaynaklıdır (C: 0 byte sorunu). Kod tabanı sabittir.
+- **Zustand:** `StatMetrics` ve `SystemMetrics` ayrıştırıldı, mimari daha temiz hale getirildi.
+- **RAG Context:** Hafıza aramalarında otomatik olarak mevcut `bbch_stage` verisi sorguya eklenir.

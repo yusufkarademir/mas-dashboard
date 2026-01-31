@@ -15,29 +15,29 @@ MAS-Kontrol projesi, merkezi bir operasyonel kontrol paneli olarak modern web te
 ## 3. Mimari Bileşenler ve Veri Akışı
 ### A. Merkezi Durum Yönetimi (`useStore.ts`)
 Uygulama genelinde `Zustand` kullanılarak merkezi bir "Source of Truth" oluşturulmuştur.
-*   **Interactions:** AI ile yapılan etkileşimlerin geçmişi.
-*   **Metrics:** CPU kullanımı, vektör verileri ve işlenen alan metrikleri.
-*   **Memory Mode:** Vektör tabanlı hafıza araması için global bayrak.
+*   **Metrics (Ar-Ge):** BBCH skalası, bitki sayımı (hedef/gerçek), NDVI/NDRE ortalamaları, stres indeksi ve hastalık takibi.
+*   **System Metrics:** CPU kullanımı, vektör hafıza ve işlenen toplam alan (ayrıştırıldı).
+*   **Memory Mode:** Vektör tabanlı hafıza araması için global bayrak (BBCH bağlamı eklendi).
 
 ### B. Bileşen Yapısı
-*   **ActionCenter:** AI tabanlı karar destek ve analiz merkezi.
-*   **MapSection & GisOverlay:** Coğrafi verilerin görselleştirildiği ana alan.
-*   **ActivityFeed:** Sistem kayıtları ve etkileşimlerin gerçek zamanlı akışı.
-*   **MemorySearch:** Karar destek mekanizması için semantik arama arayüzü.
+*   **ActionCenter:** Akıllı karar destek merkezi; reçete (prescription) türü aksiyonlar ve fenolojik etiketler eklendi.
+*   **MapSection & GisOverlay:** Çok katmanlı GIS desteği; NDVI COG raster, yeşil aksam segmentasyon (vektör) ve hastalık ısı haritası (heatmap).
+*   **StatCards:** Dinamik renklendirme kuralları; NDVI < 0.50 veya Stres > 0.70 durumunda alarm görselleştirmesi.
 
 ### C. Veri Entegrasyonu (`usePocketBase.ts` & `useSimulation.ts`)
-*   **PocketBase:** Gerçek zamanlı abonelik (`Real-time subscription`) modeli ile veritabanındaki değişimler anında UI'a yansıtılır.
-*   **Simulation Engine:** Otonom veri üretimi (`Ghost in the Shell`) için arka planda çalışan simülasyon kancaları entegre edilmiştir.
+*   **PocketBase:** `field_analytics` koleksiyonu üzerinden gerçek zamanlı tarımsal veri aboneliği.
+*   **Simulation Engine:** Ar-Ge metriklerini ve gelişim skorlarını rastgele üreten otonom simülasyon kancaları.
 
 ## 4. Mevcut Durum ve Teknik Notlar
-*   **Modülerlik:** Bileşenler mikro-mimari prensiplerine göre ayrıştırılmıştır; GIS, AI ve UI katmanları bağımsızdır.
-*   **Yüksek Performans:** Karar anında `Zustand` ve `Framer Motion` optimizasyonları ile akıcı bir kullanıcı deneyimi hedeflenmektedir.
-*   **Bütünlük:** Son yapılan disk temizliği sonrası kod tabanı, bağımlılıklar ve veritabanı bütünlüğü (Data Integrity) tam olarak doğrulanmıştır.
+*   **Bütünlük:** Ar-Ge entegrasyonu sonrası tüm TypeScript tipleri ve build süreçleri doğrulanmıştır.
+*   **Ar-Ge Odaklılık:** Sistem artık sadece bir dashboard değil, aktif bir tarımsal karar destek mekanizmasıdır.
+*   **Deployment:** Coolify build hatası (code 255) sunucu kaynaklı (disk/RAM) saptanmış, kod seviyesinde stabilizasyon sağlanmıştır.
 
 ## 5. Gelecek Planlaması / Teknik Borçlar
-*   **Edge Cases:** Veri kopmalarında `PocketBase` için otomatik yeniden bağlanma stratejileri güçlendirilmeli.
-*   **Optimization:** Büyük ölçekli GIS verileri için istemci tarafında kümeleme (clustering) entegrasyonu planlanabilir.
+*   **GeoJSON Entegrasyonu:** Gerçek saha verileri için dinamik GeoJSON yükleme modülü.
+*   **Offline-First:** PWA ve offline veri senkronizasyon stratejileri.
+*   **AI Reçete Motoru:** Teşhis edilen hastalıklara göre otomatik ilaçlama reçetesi üreten LLM ajanları.
 
 ---
 **Hazırlayan:** Antigravity (Senior Full Stack Developer AI)
-**Rapor Durumu:** Güncel - Stabil
+**Rapor Durumu:** Güncel (Ar-Ge Entegrasyonu Tamamlandı) - Stabil

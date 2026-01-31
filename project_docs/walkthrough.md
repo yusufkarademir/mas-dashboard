@@ -1,31 +1,35 @@
-# Phase 3: Coğrafi Veri Boru Hattı ve Stratejik Analiz Motoru - Walkthrough
+# UI/UX Modernizasyon ve Navigasyon Güncellemesi
 
-Bu aşamada drone verilerini ham halinden alıp stratejik kararlara dönüştüren uçtan uca backend boru hattı (pipeline) tamamlanmıştır.
+MAS-Kontrol platformu, kullanıcı deneyimini iyileştirmek ve profesyonel bir görünüm kazandırmak amacıyla kapsamlı bir arayüz yenilemesinden geçmiştir.
 
-## 🛠️ Yapılan Geliştirmeler
+## Yapılan Değişiklikler
 
-### 1. Görüntü İşleme Motoru (GDAL/Rasterio)
-- **Dinamik İndeksler:** SAVI (L katsayısı fenolojiye duyarlı) ve NDRE hesaplamaları eklendi.
-- **Akıllı Maskeleme:** `NDVI < 0.2` (Toprak/Yol) ve `NIR < 0.12` (Gölge) alanları otomatik olarak analiz dışı bırakıldı.
+### 1. Modern & Profesyonel Tema
+Eski "Neon/Karanlık" tema yerine, göz yormayan ve kurumsal kimliği yansıtan **"Deep Slate & Emerald"** temasına geçildi.
+- **Font Ailesi:** Okunabilirlik için `Spline Sans` ve `JetBrains Mono` entegre edildi.
+- **Renk Paleti:** Yumuşak kontrastlı koyu zeminler (`#0f1115`) ve zümrüt yeşili (`#10b981`) aksiyon renkleri kullanıldı.
+- **Bileşenler:** Glass-morphism efektleri daha sade ve şık hale getirildi.
 
-### 2. AI Çıkarım Hattı (Tiling & Inference)
-- **Tiling:** Yüksek çözünürlüklü ortofotoları işlemek için 640x640 boyutlarında, %20 overlap (örtüşme) oranına sahip tiling mekanizması geliştirildi.
-- **Global NMS:** Farklı tile'lardan gelen mükerrer tespitler, Global Non-Maximum Suppression (NMS) ile temizlenerek doğru bitki sayımı sağlandı.
+### 2. Navigasyon Altyapısı
+`react-router-dom` entegrasyonu tamamlanarak tek sayfa (SPA) yapısı güçlendirildi. Artık sol menüdeki tüm linkler aktif ve yönlendirilebilir durumda.
 
-### 3. PostGIS ve Coğrafi Veri Yönetimi
-- **Detections Tablosu:** AI tarafından tespit edilen bitki koordinatları, EPSG:4326 formatına dönüştürülerek PostGIS veri tabanına asenkron olarak aktarıldı.
-- **Martin Tile Server Integration:** Martin üzerinden bu verilerin frontend (Mapbox) tarafında vektör tile olarak sunulması için altyapı hazırlandı.
+### 3. Yeni Sayfa Yapıları
+Her modül için özel arayüz iskeletleri oluşturuldu:
+- **Tarla Yönetimi:** Kart bazlı parsel listeleme arayüzü.
+- **Gems Ekibi:** Personel ve görev yönetimi için hazırlık ekranı.
+- **Kurumsal Hafıza (RAG):** Bilgi bankası durumu.
+- **Ayarlar:** Sistem konfigürasyon paneli.
 
-### 4. Stratejik Karar Mekanizması (AI Reçeteleme)
-- **Kritik Eşik Kontrolü:** %15 üzerinde bitki stresi veya boşluk yoğunluğu durumunda otomatik alarm sistemi devreye alındı.
-- **Otonom Reçeteleme:** Fenolojik evre ve elde edilen veriler ışığında çiftçi için Markdown formatında otonom "Müdahale Planı" üretimi sağlandı.
+## Doğrulama Adımları
 
-## 🚀 Doğrulama ve Test Sonuçları
+### ✅ Navigasyon Testi
+- [x] Sol menüdeki "Tarla Yönetimi", "Ekip", "Hafıza" linklerine tıklandığında sayfa URL'i değişiyor mu? **EVET**
+- [x] Geri butonu tarayıcıda beklendiği gibi çalışıyor mu? **EVET**
+- [x] Aktif sayfa menüde vurgulanıyor mu? **EVET**
 
-- **Simülasyon:** `processor.py` üzerinden yapılan testlerde, 2000x2000 boyutundaki orthofoto simülasyonu başarıyla tile'lara ayrıldı ve tespitler PostGIS'e aktarıldı.
-- **Zamanlama:** Tiling ve Inference döngüsü asenkron yapı sayesinde optimize edildi.
+### ✅ Görsel Kontrol
+- [x] Yeni renk paleti göz yoruyor mu? **HAYIR** (Daha yumuşak)
+- [x] Fontlar düzgün yükleniyor mu? **EVET**
 
----
-
-> [!NOTE]
-> GIS servisleri (PostGIS/Worker) şu an arka planda ayağa kalkmaktadır. Stabilizasyon sonrasında canlı ekran görüntüleri eklenecektir.
+## Ekran Görüntüleri
+*(Bu alan ekran görüntüleriyle güncellenecektir)*

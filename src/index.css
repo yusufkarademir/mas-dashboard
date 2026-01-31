@@ -1,35 +1,40 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Fira+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @theme {
-  --color-mas-black: #050505;
-  --color-mas-dark: #0f172a;
-  --color-mas-gray: #1e293b;
-  --color-mas-light: #39ff14;
-  --color-mas-cyan: #00f5ff;
-  --color-mas-text: #f8fafc;
-  --color-mas-muted: #94a3b8;
+  /* Kurumsal Modern Palet */
+  --color-mas-base: #0f1115;      /* Çok koyu, yumuşak siyah */
+  --color-mas-surface: #181b21;   /* Kartlar ve paneller için yüzey */
+  --color-mas-surface-hover: #22262e;
   
-  --font-sans: 'Fira Sans', ui-sans-serif, system-ui, sans-serif;
-  --font-mono: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-
-  /* HSL Modern Palet */
-  --color-agri-green: hsl(120, 100%, 54%);
-  --color-agri-cyan: hsl(182, 100%, 50%);
-  --color-agri-red: hsl(0, 84%, 60%);
-  --color-agri-violet: hsl(272, 51%, 47%);
+  --color-mas-primary: #10b981;   /* Emerald 500 - Ana aksiyon rengi */
+  --color-mas-primary-glow: rgba(16, 185, 129, 0.4);
+  
+  --color-mas-accent: #3b82f6;    /* Blue 500 - İkincil vurgular */
+  --color-mas-warning: #f59e0b;   /* Amber 500 */
+  --color-mas-danger: #ef4444;    /* Red 500 */
+  
+  --color-mas-text: #e2e8f0;      /* Slate 200 - Okunabilir metin */
+  --color-mas-text-muted: #94a3b8; /* Slate 400 */
+  
+  --color-border-subtle: rgba(255, 255, 255, 0.08);
+  
+  --font-sans: 'Spline Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
 @layer base {
   body {
-    @apply bg-mas-black text-mas-text font-sans antialiased selection:bg-mas-light/30;
-    background-image: radial-gradient(circle at 50% -20%, #1e293b 0%, #050505 80%);
+    @apply bg-mas-base text-mas-text font-sans antialiased selection:bg-mas-primary/30 selection:text-white;
+    background-image: 
+      radial-gradient(circle at 15% 50%, rgba(16, 185, 129, 0.05) 0%, transparent 25%),
+      radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.05) 0%, transparent 25%);
   }
   
   /* Custom Scrollbar */
   ::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
+    width: 6px;
+    height: 6px;
   }
   
   ::-webkit-scrollbar-track {
@@ -37,54 +42,36 @@
   }
   
   ::-webkit-scrollbar-thumb {
-    @apply bg-mas-gray/50 rounded-full hover:bg-mas-light/50 transition-colors;
+    @apply bg-mas-surface-hover rounded-full hover:bg-mas-text-muted/50 transition-colors;
   }
 }
 
 @layer components {
+  /* Glass Panel - Daha sade ve profesyonel */
   .glass-panel {
-    @apply bg-mas-black/40 border border-white/5 backdrop-blur-2xl shadow-2xl relative overflow-hidden;
+    @apply bg-mas-surface/90 border border-border-subtle shadow-xl backdrop-blur-md;
   }
   
-  .glass-panel::before {
-    content: '';
-    @apply absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none;
+  /* Kart Efektleri */
+  .card-hover {
+    @apply hover:border-mas-primary/30 hover:shadow-[0_0_20px_rgba(16,185,129,0.1)] transition-all duration-300;
   }
 
-  .neon-border-agri {
-    @apply border-agri-green/20 shadow-[0_0_20px_rgba(57,255,20,0.1)];
+  /* Status Badge */
+  .badge {
+    @apply px-2 py-0.5 rounded text-[10px] font-medium uppercase tracking-wider border;
   }
-
-  /* Glitch Effect */
-  @keyframes glitch {
-    0% { transform: translate(0); }
-    20% { transform: translate(-2px, 2px); }
-    40% { transform: translate(-2px, -2px); }
-    60% { transform: translate(2px, 2px); }
-    80% { transform: translate(2px, -2px); }
-    100% { transform: translate(0); }
+  
+  .badge-success {
+    @apply bg-emerald-500/10 text-emerald-400 border-emerald-500/20;
   }
-
-  .animate-glitch {
-    animation: glitch 0.3s cubic-bezier(.25,.46,.45,.94) both infinite;
-    text-shadow: 2px 0 #00f5ff, -2px 0 #ff00c1;
+  
+  .badge-warning {
+    @apply bg-amber-500/10 text-amber-400 border-amber-500/20;
   }
-
-  /* Scanline Effect */
-  .scanline {
-    width: 100%;
-    height: 100px;
-    z-index: 10;
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(57, 255, 20, 0.05) 50%, rgba(0, 0, 0, 0) 100%);
-    opacity: 0.1;
-    position: absolute;
-    bottom: 100%;
-    animation: scanline 6s linear infinite;
-  }
-
-  @keyframes scanline {
-    0% { bottom: 100%; }
-    80% { bottom: 0; }
-    100% { bottom: 0; }
+  
+  .badge-danger {
+    @apply bg-red-500/10 text-red-400 border-red-500/20;
   }
 }
+

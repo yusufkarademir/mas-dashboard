@@ -1,26 +1,21 @@
-- [x] Başlangıç Araştırması ve Planlama
-- [x] Phase 1 & 2: Temel UI ve Simülasyon Geliştirme
-- [x] Phase 2: Backend ve Canlı Deployment
-- [/] Phase 3: Coğrafi Veri Boru Hattı ve Stratejik Analiz Motoru
-    - [x] Veri Tabanı ve Şema (PocketBase & PostGIS)
-        - [x] `analysis_results` koleksiyonu hazırlığı
-        - [x] `strategy_reports` koleksiyonu hazırlığı
-        - [x] PostGIS `detections` tablosu hazırlığı
-    - [/] Görüntü İşleme Motoru (GDAL/ODM)
-        - [x] Radyometrik Kalibrasyon ve SAVI/NDRE formülleri
-        - [x] Dinamik SAVI ($L$ katsayısı) mantığı
-        - [x] Maskeleme (NDVI < 0.2 ve NIR < 0.12 filtreleri)
-    - [x] AI Çıkarım Hattı (TensorRT & Tiling)
-        - [x] 640x640 %20 overlap tiling mekanizması
-        - [x] ONNX Runtime / TensorRT .engine çıkarım motoru (Mock/Architecture)
-        - [x] Stitching ve Global NMS (Non-Maximum Suppression)
-    - [x] Stratejik Karar ve AI Reçeteleme
-        - [x] Kritik eşik alarm mekanizması (%15 NDVI düşüşü)
-        - [x] LLM (Ollama/GPT-4) ile Markdown müdahale planı üretimi
-    - [x] Frontend: "Agro-Intelligence" UI
-        - [x] `index.css` Modernizasyonu (HSL, Glassmorphism)
-        - [x] Mapbox & COG Entegrasyonu (`GisOverlay.tsx`)
-        - [x] Action Center & Glitch Uyarılar (`ActionCenter.tsx`)
-        - [x] Dinamik Dashboard Cilası (Micro-animations)
-- [x] Phase 3: Tamamlandı ve Doğrulandı
-- [/] Phase 4: Stabilizasyon ve Final Testler
+# Ar-Ge Entegrasyon Görev Listesi
+
+- [x] Zustand Store (`useStore.ts`) Metriklerini Güncelle
+- [x] `StatCards.tsx` UI ve Görselleştirme Kurallarını Uygula
+- [x] `usePocketBase.ts` Abonelik Modelini Güncelle (`field_analytics`)
+- [x] `MemorySearch` Vektör Sorgu Yapısını BBCH verisiyle ilişkilendir
+- [x] Null-Safety ve "Analiz Aşamasında" durumlarını UI'a ekle
+- [x] `ActionCenter` Müdahale Talimatlarını GeoJSON ile yapılandır
+- [x] `MapSection` Rasterio ve Isı Haritası entegrasyonu
+- [x] Deployment Hata Analizi ve Düzeltme (Push yapıldı)
+
+## UI/UX Modernizasyonu ve Navigasyon (YENİ)
+- [x] `react-router-dom` Kurulumu ve Yapılandırması
+- [x] Yeni Renk Paleti ve Tema Entegrasyonu (Modern/Professional)
+- [x] `Sidebar` Navigasyon Linklerinin Bağlanması
+- [x] Demo Sayfaların Oluşturulması:
+    - [x] `Dashboard` (Mevcut Ana Ekran)
+    - [x] `FieldManagement` (Tarla Yönetimi)
+    - [x] `Team` (Gems Ekibi)
+    - [x] `KnowledgeBase` (Hafıza/RAG)
+    - [x] `Settings` (Ayarlar)

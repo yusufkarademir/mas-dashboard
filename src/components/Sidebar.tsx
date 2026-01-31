@@ -1,65 +1,88 @@
 import { ROLES } from '../constants/schema';
-import { LayoutDashboard, Users, Leaf, Database, Settings } from 'lucide-react';
+import { LayoutDashboard, Users, Leaf, Database, Settings, LogOut } from 'lucide-react';
 import { cn } from '../lib/utils';
+import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 export function Sidebar() {
+  const location = useLocation();
+  const isActive = (path: string) => location.pathname === path;
+
   const menuItems = [
-    { icon: LayoutDashboard, label: 'Kontrol Paneli', active: true },
-    { icon: Leaf, label: 'Tarla Yönetimi' },
-    { icon: Users, label: 'Gems Ekibi' },
-    { icon: Database, label: 'Hafıza (RAG)' },
-    { icon: Settings, label: 'Ayarlar' },
+    { icon: LayoutDashboard, label: 'Kontrol Paneli', path: '/' },
+    { icon: Leaf, label: 'Tarla Yönetimi', path: '/fields' },
+    { icon: Users, label: 'Gems Ekibi', path: '/team' },
+    { icon: Database, label: 'Hafıza (RAG)', path: '/knowledge' },
+    { icon: Settings, label: 'Ayarlar', path: '/settings' },
   ];
 
   return (
-    <aside className="w-64 glass-panel border-r border-white/10 h-screen p-6 flex flex-col z-30">
-      <div className="flex items-center gap-3 mb-10 px-2 group cursor-pointer">
-        <div className="relative">
-          <div className="w-8 h-8 rounded bg-mas-light shadow-[0_0_15px_rgba(57,255,20,0.5)] group-hover:scale-110 transition-transform duration-300" />
-          <div className="absolute inset-0 bg-mas-light rounded animate-ping opacity-20" />
-        </div>
-        <h1 className="text-2xl font-black tracking-tighter text-white font-mono">
-          MAS<span className="text-mas-light text-glow-green">.Ai</span>
-        </h1>
+    <aside className="w-72 bg-mas-base border-r border-border-subtle h-screen flex flex-col z-30 relative shadow-2xl">
+      {/* Logo Section */}
+      <div className="h-20 flex items-center px-6 border-b border-border-subtle/50 mb-6">
+         <div className="flex items-center gap-3">
+             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-mas-primary to-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-900/20">
+                 <Leaf className="w-4 h-4 text-white" />
+             </div>
+             <div>
+                 <h1 className="text-lg font-bold text-white tracking-tight leading-none">MAS<span className="text-mas-primary">.Pilot</span></h1>
+                 <span className="text-[10px] text-mas-text-muted font-mono tracking-wider">v3.1 STABLE</span>
+             </div>
+         </div>
       </div>
 
-      <nav className="flex-1 space-y-3">
-        {menuItems.map((item) => (
-          <button
-            key={item.label}
-            className={cn(
-              "flex items-center gap-3 px-4 py-3 w-full rounded-xl text-sm font-medium transition-all duration-200 group relative overflow-hidden",
-              item.active 
-                ? "bg-mas-light/10 text-mas-light neon-border-green" 
-                : "text-mas-muted hover:text-white hover:bg-white/5"
-            )}
-          >
-            {item.active && (
-              <motion.div 
-                layoutId="active-pill"
-                className="absolute left-0 w-1 h-6 bg-mas-light rounded-r-full"
-                transition={{ type: "spring", stiffness: 300, damping: 300 }}
-              />
-            )}
-            <item.icon className={cn("w-5 h-5 transition-transform duration-200 group-hover:scale-110", item.active ? "text-mas-light" : "text-mas-muted")} />
-            <span className="relative z-10">{item.label}</span>
-          </button>
-        ))}
+      {/* Navigation */}
+      <nav className="flex-1 px-4 space-y-2">
+        {menuItems.map((item) => {
+          const active = isActive(item.path);
+          return (
+            <Link
+              key={item.path}
+              to={item.path}
+              className={cn(
+                "flex items-center gap-3 px-4 py-3 w-full rounded-lg text-sm font-medium transition-all duration-200 group relative overflow-hidden",
+                active 
+                  ? "bg-mas-primary/10 text-white" 
+                  : "text-mas-text-muted hover:text-white hover:bg-mas-surface"
+              )}
+            >
+              {active && (
+                <motion.div 
+                  layoutId="active-nav-indicator"
+                  className="absolute left-0 top-0 bottom-0 w-1 bg-mas-primary"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.2 }}
+                />
+              )}
+              <item.icon className={cn("w-5 h-5 transition-colors", active ? "text-mas-primary" : "text-mas-text-muted group-hover:text-white")} />
+              <span className="relative z-10">{item.label}</span>
+            </Link>
+          );
+        })}
       </nav>
 
-      <div className="mt-auto border-t border-white/5 pt-6">
-        <h3 className="text-[10px] font-bold text-mas-muted mb-4 px-2 uppercase tracking-[0.2em]">SİSTEM DURUMU</h3>
-        <div className="space-y-4">
-          {Object.entries(ROLES).map(([key, role]) => (
-            <div key={key} className="flex items-center justify-between px-2 text-[11px] text-mas-muted group cursor-help">
-              <span className="capitalize font-medium group-hover:text-white transition-colors">{role.replace('_', ' ')}</span>
-              <div className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-mas-light animate-pulse" />
-                <span className="text-mas-light/50 font-mono">ONLINE</span>
-              </div>
-            </div>
-          ))}
+      {/* Footer / Status */}
+      <div className="p-4 mt-auto">
+        <div className="bg-mas-surface rounded-xl p-4 border border-border-subtle">
+           <div className="flex items-center justify-between mb-3">
+              <span className="text-[10px] font-bold text-mas-text-muted uppercase">Sistem Durumu</span>
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+           </div>
+           
+           <div className="space-y-2">
+             {Object.keys(ROLES).slice(0, 3).map((key) => (
+               <div key={key} className="flex items-center gap-2 text-[11px] text-mas-text-muted">
+                  <div className="w-1 h-1 rounded-full bg-mas-text-muted/50"></div>
+                  <span className="capitalize">{key.toLowerCase().replace('_', ' ')}</span>
+               </div>
+             ))}
+           </div>
+
+           <button className="w-full mt-4 flex items-center justify-center gap-2 py-2 rounded-lg bg-mas-base border border-border-subtle text-xs text-mas-text-muted hover:text-mas-danger hover:border-mas-danger/30 transition-colors">
+              <LogOut className="w-3 h-3" />
+              Çıkış Yap
+           </button>
         </div>
       </div>
     </aside>
